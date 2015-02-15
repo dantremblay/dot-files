@@ -1,0 +1,29 @@
+[user]
+	name = Julien Kassar
+	email = github@kassisol.com
+
+[color]
+	ui = auto
+
+[push]
+	default = matching
+
+[alias]
+	alias = !"git config --list | awk -F'=' '/^alias/ { print $1, \":\", $2 }' | sed 's/alias\\.//'"
+
+	ls = log --pretty=format:'%C(yellow)%h%Cred%d%Creset %s %C(bold blue)[%an]%Creset' --decorate
+	ll = log --pretty=format:'%C(yellow)%h%Cred%d%Creset %s %C(bold blue)[%an]%Creset' --decorate --numstat
+	ld = log --color --pretty=format:'%Cred%h%Creset%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)[%an]%Creset'
+	lds = log --color --pretty=format:'%Cred%h%Creset%C(yellow)%d%Cgreen(%ad)%Creset %s %C(bold blue)[%an]%Creset' --date=short
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)[%an]%Creset' --abbrev-commit --date=relative
+
+	new = !git log $1@{1}..$1@{0} "$@"
+
+	unamend = reset --soft HEAD@{1}
+
+	# Show verbose output about tags, branches or remotes
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+
+	contributors = shortlog --summary --numbered
