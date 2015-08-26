@@ -157,6 +157,9 @@ PS1+="\[${bold}\]\n"; # newline
 PS1+="\[${userStyle}\]\u"; # username
 PS1+="\[${white}\] at ";
 PS1+="\[${hostStyle}\]\h"; # host
+if [ -f /.dockerenv ]; then
+	PS1+="\[${white}\] [c]"
+fi
 PS1+="\[${white}\] in ";
 PS1+="\[${green}\]\w\[${reset}\]"; # working directory
 PS1+=" \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch)\[\e[m\]"; # Git repository details
