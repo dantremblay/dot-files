@@ -106,7 +106,7 @@ white="\e[1;37m";
 
 # change prompt when using git
 function parse_git_branch {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1) /'
+  git symbolic-ref --short -q HEAD 2> /dev/null
 }
 
 function git_is_uptodate {
