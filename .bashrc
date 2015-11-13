@@ -105,8 +105,20 @@ cyan="\e[1;36m";
 white="\e[1;37m";
 
 # change prompt when using git
+function git_branch {
+        git symbolic-ref --short -q HEAD 2> /dev/null
+}
+
 function parse_git_branch {
-  git symbolic-ref --short -q HEAD 2> /dev/null
+        _result=`git_branch`
+
+        if [ -z $_result ]; then
+                _result=""
+        else
+                _result="(${_result})"
+        fi
+
+        echo ${_result}
 }
 
 function git_is_uptodate {
@@ -118,7 +130,7 @@ function git_is_uptodate {
 		code=31
 
 		if [ ! -f /tmp/git-prompt-disabled ]; then
-			remote_head=`git ls-remote -h ${remote} 2> /dev/null | grep $(git rev-parse --abbrev-ref HEAD 2> /dev/null) | awk '{ print $1 }'`
+			remote_head=`git ls-remote -h ${remote} 2> /dev/null | grep "refs/heads/$(git_branch)" | awk '{ print $1 }'`
 
 			if [ ! -z ${remote_head} ]; then
 				result=`git log --format="%H" 2> /dev/null | grep ${remote_head} | wc -l`
