@@ -42,6 +42,8 @@ HISTCONTROL=ignoreboth
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+HISTIGNORE="history*:ls:pwd:date:* --help"
+
 # Needed for our custom version of 'less'
 export MYVIMDIR="$HOME/.vim/"
 
