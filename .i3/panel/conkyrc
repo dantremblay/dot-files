@@ -1,0 +1,20 @@
+background no
+out_to_x no
+out_to_console yes
+update_interval 1
+total_run_times 0
+use_spacer none
+
+TEXT
+${if_mpd_playing}♪ ${mpd_artist}${mpd_title}${endif}     \
+🔊 ${exec ~/.i3/panel/volume.sh}     \
+🐳 ${if_existing /var/run/docker.pid}yes${else}no${endif}     \
+${if_up eth0} ${downspeedf eth0} | ${upspeedf eth0}${endif} \
+${if_up eth1}⮁ ${downspeedf eth1} | ${upspeedf eth1}${endif} \
+${if_up wlan0} ${downspeedf wlan0} | ${upspeedf wlan0}${endif}     \
+🌡 ${hwmon 0 temp 1}°C \
+▣ ${cpu}% \
+≣ ${mem}     \
+❤ ${battery_percent}% ${battery_time}    \
+⛅ ${execi 300 ~/.i3/panel/weatherstatus}     \
+⏲ ${time %a %b %d} ${time %H:%M:%S} \
