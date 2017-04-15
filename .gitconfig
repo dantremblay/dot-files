@@ -5,7 +5,7 @@
 	default = matching
 
 [alias]
-	alias = !"git config --list | awk -F'=' '/^alias/ { print $1, \":\", $2 }' | sed 's/alias\\.//'"
+	alias = !git config -l | grep ^alias | cut -c 7- | sort
 
 	ls = log --pretty=format:'%C(yellow)%h%Cred%d%Creset %s %C(bold blue)[%an]%Creset' --decorate
 	ll = log --pretty=format:'%C(yellow)%h%Cred%d%Creset %s %C(bold blue)[%an]%Creset' --decorate --numstat
@@ -15,11 +15,20 @@
 
 	new = !git log $1@{1}..$1@{0} "$@"
 
+	unadd = !git reset HEAD -- "$@"
 	unamend = reset --soft HEAD@{1}
+	undo = !git reset HEAD~1 --mixed
 
 	# Show verbose output about tags, branches or remotes
 	tags = tag -l
 	branches = branch -a
 	remotes = remote -v
+
+	# Amend the currently staged files to the latest commit
+	amend = commit --amend --reuse-message=HEAD
+
+	# Remove branches that have already been merged with master
+	# a.k.a. ‘delete merged’
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d; git remote -v update -p"
 
 	contributors = shortlog --summary --numbered
