@@ -118,7 +118,7 @@ function parse_git_branch {
         if [ -z $_result ]; then
                 _result=""
         else
-                _result="(${_result})"
+                _result="${_result}"
         fi
 
         echo ${_result}
@@ -217,18 +217,20 @@ fi;
 
 # Set the terminal title to the current working directory.
 PS1="\[\033]0;\u@\h\007\]";
-PS1+="\[${bold}\]\n"; # newline
-PS1+="\[${userStyle}\]\u"; # username
-PS1+="\[${white}\] at ";
-PS1+="\[${hostStyle}\]\h"; # host
-if [ -f /.dockerenv ]; then
-	PS1+="\[${white}\] [c]"
+if [[ ! -z $SSH_TTY && -z $TMUX ]]; then
+	PS1+="\[${bold}\]\n"; # newline
+	PS1+="\[${userStyle}\]\u"; # username
+	PS1+="\[${white}\] at ";
+	PS1+="\[${hostStyle}\]\h"; # host
+	PS1+="\[${white}\] in ";
 fi
-PS1+="\[${white}\] in ";
 PS1+="\[${green}\]\w\[${reset}\]"; # working directory
-PS1+=" \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch)\[\e[m\]"; # Git repository details
+if [ -f /.dockerenv ]; then
+        PS1+="\[${white}\] [c]"
+fi
+PS1+=" \$(git_dirty) \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch) \$(git_arrows) \$(suspended_jobs)\[\e[m\]";
 PS1+="\n";
-PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
+PS1+="\[${white}\]> \[${reset}\]"; # `$` (and reset color)
 export PS1;
 
 PS2="\[${yellow}\]→ \[${reset}\]";
@@ -239,10 +241,10 @@ export PS2;
 #-----------------------------------------------------------------------------
 
 # display cert info
-function certinfo () { openssl x509 -in $1 -noout -text; }
+function certinfo() { openssl x509 -in $1 -noout -text; }
 
 # display CSR info
-function csrinfo () { openssl asn1parse -in $1; }
+function csrinfo() { openssl asn1parse -in $1; }
 
 # puppet template syntax checking
 function pt() {
