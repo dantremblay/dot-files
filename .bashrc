@@ -246,25 +246,6 @@ function certinfo() { openssl x509 -in $1 -noout -text; }
 # display CSR info
 function csrinfo() { openssl asn1parse -in $1; }
 
-# puppet template syntax checking
-function pt() {
-	if [ -z $1 ]; then
-		echo "usage: pt <puppet_template_file.erb>"
-		return;
-	fi
-
-	/usr/bin/erb -P -x -T '-' $1 | /usr/bin/ruby -c
-}
-
-# puppet manifest syntax checking
-function pc() {
-	if [ -z $1 ]; then
-		puppet parser validate init.pp
-	else
-		puppet parser validate $1
-	fi
-}
-
 # Custom less function, uses vim so we get syntax highlighting
 function cless() {
 	if [ $# -eq 0 ]; then
