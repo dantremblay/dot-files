@@ -108,14 +108,14 @@ white="\e[1;37m";
 orange="\e[38;5;214m";
 
 # change prompt when using git
-function git_branch {
+git_branch() {
         git symbolic-ref --short -q HEAD 2> /dev/null
 }
 
-function parse_git_branch {
-        _result=`git_branch`
+parse_git_branch() {
+	_result=$(git_branch)
 
-        if [ -z $_result ]; then
+        if [ -z "$_result" ]; then
                 _result=""
         else
                 _result="${_result}"
@@ -124,8 +124,8 @@ function parse_git_branch {
         echo ${_result}
 }
 
-function git_is_uptodate {
-	git_dir=`git rev-parse --git-dir 2> /dev/null | wc -l`
+git_is_uptodate() {
+	git_dir=$(git rev-parse --git-dir 2> /dev/null | wc -l)
 	code=33
 
 	if [ "${git_dir}" -eq "1" ]; then
@@ -133,10 +133,10 @@ function git_is_uptodate {
 		code=31
 
 		if [ ! -f /tmp/git-prompt-disabled ]; then
-			remote_head=`git ls-remote -h ${remote} 2> /dev/null | grep "refs/heads/$(git_branch)" | awk '{ print $1 }'`
+			remote_head=$(git ls-remote -h ${remote} 2> /dev/null | grep "refs/heads/$(git_branch)" | awk '{ print $1 }')
 
 			if [ ! -z ${remote_head} ]; then
-				result=`git log --format="%H" 2> /dev/null | grep ${remote_head} | wc -l`
+				result=$(git log --format="%H" 2> /dev/null | grep ${remote_head} | wc -l)
 
 				if [ "${result}" -eq "1" ]; then
 					code=32
@@ -194,7 +194,7 @@ git_arrows() {
 suspended_jobs() {
     local sj
     sj=$(jobs 2>/dev/null | tail -n 1)
-    if [[ $sj == "" ]]; then
+    if [ -z "$sj" ]; then
         echo ""
     else
         echo -e "${orange}✱${reset}"
@@ -202,52 +202,56 @@ suspended_jobs() {
 }
 
 # Highlight the user name when logged in as root.
-if [[ "${USER}" == "root" ]]; then
-	userStyle="${red}";
+if [ "${USER}" == "root" ]; then
+	userStyle="${red}"
 else
-	userStyle="${cyan}";
-fi;
+	userStyle="${cyan}"
+fi
 
 # Highlight the hostname when connected via SSH.
 if [[ "${SSH_TTY}" ]]; then
-	hostStyle="${bold}${red}";
+	hostStyle="${bold}${red}"
 else
-	hostStyle="${yellow}";
-fi;
+	hostStyle="${yellow}"
+fi
 
 # Set the terminal title to the current working directory.
-PS1="\[\033]0;\u@\h\007\]";
-if [[ ! -z $SSH_TTY && -z $TMUX ]]; then
-	PS1+="\[${bold}\]\n"; # newline
-	PS1+="\[${userStyle}\]\u"; # username
-	PS1+="\[${white}\] at ";
-	PS1+="\[${hostStyle}\]\h"; # host
-	PS1+="\[${white}\] in ";
+PS1="\[\033]0;\u@\h\007\]"
+if [[ ! -z "$SSH_TTY" && -z "$TMUX" ]]; then
+	PS1+="\[${bold}\]\n" # newline
+	PS1+="\[${userStyle}\]\u" # username
+	PS1+="\[${white}\] at "
+	PS1+="\[${hostStyle}\]\h" # host
+	PS1+="\[${white}\] in "
 fi
 PS1+="\[${green}\]\w\[${reset}\]"; # working directory
 if [ -f /.dockerenv ]; then
         PS1+="\[${white}\] [c]"
 fi
-PS1+=" \$(git_dirty) \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch) \$(git_arrows) \$(suspended_jobs)\[\e[m\]";
-PS1+="\n";
-PS1+="\[${white}\]> \[${reset}\]"; # `$` (and reset color)
-export PS1;
+PS1+=" \$(git_dirty) \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch) \$(git_arrows) \$(suspended_jobs)\[\e[m\]"
+PS1+="\n"
+PS1+="\[${white}\]> \[${reset}\]" # `$` (and reset color)
+export PS1
 
-PS2="\[${yellow}\]→ \[${reset}\]";
-export PS2;
+PS2="\[${yellow}\]→ \[${reset}\]"
+export PS2
 
 #-----------------------------------------------------------------------------
 # Misc. Custom Functions
 #-----------------------------------------------------------------------------
 
 # display cert info
-function certinfo() { openssl x509 -in $1 -noout -text; }
+certinfo() {
+	openssl x509 -in $1 -noout -text
+}
 
 # display CSR info
-function csrinfo() { openssl asn1parse -in $1; }
+csrinfo() {
+	openssl asn1parse -in $1
+}
 
 # Custom less function, uses vim so we get syntax highlighting
-function cless() {
+cless() {
 	if [ $# -eq 0 ]; then
 		vim -c 'so $MYVIMDIR/tools/less.vim' -
 	else
@@ -256,31 +260,31 @@ function cless() {
 }
 
 # Create a new directory and enter it
-function md() {
-    mkdir -p "$@" && cd "$@"
+md() {
+	mkdir -p "$@" && cd "$@"
 }
 
 # Extract archives - use: extract <file>
 # Credits to http://dotfiles.org/~pseup/.bashrc
-function extract() {
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2) tar xjf $1 ;;
-            *.tar.gz) tar xzf $1 ;;
-            *.bz2) bunzip2 $1 ;;
-            *.rar) rar x $1 ;;
-            *.gz) gunzip $1 ;;
-            *.tar) tar xf $1 ;;
-            *.tbz2) tar xjf $1 ;;
-            *.tgz) tar xzf $1 ;;
-            *.zip) unzip $1 ;;
-            *.Z) uncompress $1 ;;
-            *.7z) 7z x $1 ;;
-            *) echo "'$1' cannot be extracted via extract()" ;;
-        esac
-    else
-        echo "'$1' is not a valid file"
-    fi
+extract() {
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2) tar xjf $1 ;;
+			*.tar.gz) tar xzf $1 ;;
+			*.bz2) bunzip2 $1 ;;
+			*.rar) rar x $1 ;;
+			*.gz) gunzip $1 ;;
+			*.tar) tar xf $1 ;;
+			*.tbz2) tar xjf $1 ;;
+			*.tgz) tar xzf $1 ;;
+			*.zip) unzip $1 ;;
+			*.Z) uncompress $1 ;;
+			*.7z) 7z x $1 ;;
+			*) echo "'$1' cannot be extracted via extract()" ;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
 }
 
 #-----------------------------------------------------------------------------
@@ -288,8 +292,8 @@ function extract() {
 #-----------------------------------------------------------------------------
 
 # rewrite git log author info
-function git_log_rewrite_author() {
-	if [ -z $1 -a -z $2 -a -z $3 ]; then
+git_log_rewrite_author() {
+	if [ -z "$1" -a -z "$2" -a -z "$3" ]; then
 		echo "usage: git_log_rewrite_author <name|email> <old_value> <new_value>"
 		return;
 	fi
@@ -317,10 +321,9 @@ function git_log_rewrite_author() {
 
 # You may want to put all your additions into a separate file like
 # ~/.bash_custom, instead of adding them here directly.
-
 if [ -d ~/.bash_custom.d ]; then
 	for i in ~/.bash_custom.d/*.sh; do
-		if [ -r $i ]; then
+		if [ -r "$i" ]; then
 			. $i
 		fi
 	done
