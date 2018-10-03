@@ -35,54 +35,52 @@ devgo() {
 		juliengk/dev:go
 }
 dig() {
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--log-driver none \
 		juliengk/dig "$@"
 }
-#dockerlint() {
-#}
 doctl() {
         docker container run -ti --rm \
-		-u $(id -u) \
-                juliengk/doctl "$@"
+		--user $(id -u) \
+		juliengk/doctl "$@"
 }
 htop() {
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--pid host \
 		--net none \
 		--name htop \
 		jess/htop
 }
 netcat(){
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--net host \
 		jess/netcat "$@"
 }
 nmap(){
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--net host \
 		jess/nmap "$@"
 }
 telnet(){
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--log-driver none \
 		jess/telnet "$@"
 }
 traceroute(){
-	docker container run -it --rm \
+	docker container run -ti --rm \
 		--net host \
 		jess/traceroute "$@"
 }
 travis() {
 	docker container run -ti --rm \
-		-v ${PWD}:/srv/project \
-		-v ${HOME}/Data/travis/home:/root/.travis \
+		--mount type=bind,src=${PWD},dst=/srv/project \
+		--mount type=bind,src=${HOME}/Data/travis/home,dst=/root/.travis \
 		juliengk/travis "$@"
 }
 wireshark(){
-	docker run -d --rm\
-		-v /etc/localtime:/etc/localtime:ro \
-		-v /tmp/.X11-unix:/tmp/.X11-unix \
+	docker container run -d --rm\
+		--mount type=bind,src=/etc/localtime,dst=/etc/localtime,ro \
+		--mount type=bind,src=/tmp/.X11-unix,dst=/tmp/.X11-unix \
 		-e "DISPLAY=unix${DISPLAY}" \
 		--cap-add NET_RAW \
 		--cap-add NET_ADMIN \
