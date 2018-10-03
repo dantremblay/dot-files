@@ -66,6 +66,8 @@ alias l='ls -CF'
 
 alias xargs='xargs -I {}'
 
+alias awkvars='awk --dump-variables '' && cat awkvars.out && rm awkvars.out'
+
 # copy working directory
 alias cwd='pwd | tr -d "\r\n" | xclip -selection clipboard'
 
