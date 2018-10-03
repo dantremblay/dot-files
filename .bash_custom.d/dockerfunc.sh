@@ -61,6 +61,11 @@ nmap(){
 		--net host \
 		jess/nmap "$@"
 }
+shellcheck() {
+	docker container run -t --rm \
+		--mount type=bind,src=${PWD},dst=/mnt,ro \
+		koalaman/shellcheck "$@"
+}
 telnet(){
 	docker container run -ti --rm \
 		--log-driver none \
