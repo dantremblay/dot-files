@@ -39,6 +39,10 @@ dig() {
 		--log-driver none \
 		juliengk/dig "$@"
 }
+dockerlint() {
+	docker container run -i --rm \
+		hadolint/hadolint < "$@"
+}
 doctl() {
         docker container run -ti --rm \
 		--user $(id -u) \
