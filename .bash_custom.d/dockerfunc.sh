@@ -97,3 +97,8 @@ wireshark(){
 		--name wireshark \
 		jess/wireshark
 }
+yq() {
+	docker container run -ti --rm \
+		--mount type=bind,src=${PWD},dst=/workdir \
+		mikefarah/yq yq "$@"
+}
