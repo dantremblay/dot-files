@@ -88,6 +88,8 @@ alias fastping='ping -c 100 -s.2'
 
 alias ports='ss -tln'
 
+alias vihosts='sudo vim /etc/hosts'
+
 alias ipe='curl ipinfo.io/ip'
 
 #-----------------------------------------------------------------------------
