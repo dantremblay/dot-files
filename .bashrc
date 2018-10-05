@@ -304,6 +304,21 @@ extract() {
 	fi
 }
 
+hist() {
+	case $1 in
+		on)
+			set -o history
+			;;
+		off)
+			set +o history
+			history -d $(history | tail -n 1 | awk '{ print $1 }')
+			;;
+		*)
+			echo "usage: hist on|off"
+			;;
+	esac
+}
+
 ipi() {
 	ip a show dev $1 | awk '/inet\s/ { print $2 }'
 }
