@@ -11,6 +11,9 @@
 
 set $mod Mod4
 
+set $bg-color #2f343f
+set $text-color #f3f4f5
+
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below. ISO 10646 = Unicode
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -26,7 +29,7 @@ floating_modifier $mod
 
 # start a terminal
 #bindsym $mod+Return exec i3-sensible-terminal
-bindsym $mod+Return exec urxvt
+bindsym $mod+Return exec termite -e tmux
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -37,7 +40,8 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 #bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+d exec rofi -show run
+#bindsym $mod+d exec rofi -show run
+bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlbg "#9575cd"
 
 # change focus
 #bindsym $mod+j focus left
@@ -89,10 +93,10 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 "1: term"
-set $workspace2 "2: www"
-set $workspace3 "3: email"
-set $workspace4 "4: messenger"
+set $workspace1 "1 "
+set $workspace2 "2 ""
+set $workspace3 "3 ""
+set $workspace4 "4 ""
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -118,15 +122,15 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-workspace $workspace1 output DP3
-workspace $workspace2 output DP1
-workspace $workspace3 output DP1
-workspace $workspace4 output DP1
+#workspace $workspace1 output DP3
+#workspace $workspace2 output DP1
+#workspace $workspace3 output DP1
+#workspace $workspace4 output DP1
 
 assign [class="^Thunderbird$"] $workspace3
 assign [class="^Pidgin$"] $workspace4
 
-for_window [class="(?i)keepassx"] floating enable
+for_window [class="(?i)keepassxc"] floating enable
 for_window [class="(?i)vlc"] floating enable
 for_window [class="(?i)gcalctool"] floating enable
 
@@ -137,9 +141,9 @@ bindsym $mod+Control+r exec i3-input -F 'rename workspace to "%s"' -P 'New name:
 bindsym XF86Display exec xrandr --auto
 
 # audio controls
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 -- +2% #increase sound volume
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -- -2% #decrease sound volume
-bindsym XF86AudioMute exec pactl set-sink-mute 0 -- toggle # mute sound
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +2% #increase sound volume
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -2% #decrease sound volume
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle # mute sound
 bindsym XF86AudioMicMute exec pactl set Capture toggle # mute mic
 
 # screen brightness controls
@@ -189,7 +193,7 @@ mode "$mode_system" {
     bindsym l exec --no-startup-id i3-msg exit, mode "default"
     bindsym p exec --no-startup-id systemctl poweroff, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym s exec --no-startup-id systemctl suspend, mode "default"
+    bindsym s exec --no-startup-id $HOME/.i3/suspend_lock.sh, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -233,3 +237,18 @@ bar {
 		urgent_workspace   #f1f2f6 #f1f2f6 #900000
 	}
 }
+
+exec --no-startup-id xfsettingsd --sm-client-disable
+exec --no-startup-id xset s off
+exec --no-startup-id xset s noblank
+exec --no-startup-id xset dpms 0 0 0
+#exec --no-startup-id xmodmap ~/.Xmodmap
+exec --no-startup-id setxkbmap -model pc104 -layout us,ca -option grp:alt_shift_toggle -option ctrl:nocaps
+exec --no-startup-id compton -f
+
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
+exec --no-startup-id copyq
+exec --no-startup-id redshift
+
+#exec --no-startup-id feh --bg-scale ~/Documents/IMG_20160804_212455.jpg
