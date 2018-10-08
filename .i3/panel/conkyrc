@@ -6,15 +6,10 @@ total_run_times 0
 use_spacer none
 
 TEXT
-${if_mpd_playing}♪ ${mpd_artist}${mpd_title}${endif}     \
-🔊 ${exec ~/.i3/panel/volume.sh}     \
-🐳 ${if_existing /var/run/docker.pid}yes${else}no${endif}     \
-${if_up eth0} ${downspeedf eth0} | ${upspeedf eth0}${endif} \
-${if_up eth1}⮁ ${downspeedf eth1} | ${upspeedf eth1}${endif} \
-${if_up wlan0} ${downspeedf wlan0} | ${upspeedf wlan0}${endif}     \
-🌡 ${hwmon 0 temp 1}°C \
-▣ ${cpu}% \
-≣ ${mem}     \
-❤ ${battery_percent}% ${battery_time}    \
-⛅ ${execi 300 ~/.i3/panel/weatherstatus}     \
-⏲ ${time %a %b %d} ${time %H:%M:%S} \
+[
+{ "full_text": "${exec ~/.i3/panel/volume.sh}", "color": "\#000000"},\
+{ "full_text": "${if_match ${battery_percent}>75}${else}${if_match ${battery_percent}>50}${else}${if_match ${battery_percent}>25}${else}${endif}${endif}${endif} ${battery_percent}%${if_empty ${battery_time}}${else} ${battery_time}${endif}",\
+	"color": "${if_match ${battery_percent}>15}\#000000${else}${if_match ${battery_percent}>8}\#ff4000${else}\#ff0000${endif}${endif}", "name" : "battery" },\
+{ "full_text": " ${execi 300 ~/.i3/panel/weatherstatus}", "color": "\#000000", "name": "weather" },\
+{ "full_text": " ${time %a %d %b}", "color": "\#000000", "name": "date" },\
+{ "full_text": "${time %H:%M:%S}", "color": "\#000000", "name": "time" },\
