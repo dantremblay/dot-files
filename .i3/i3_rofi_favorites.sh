@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 list_favorites() {
-	echo -e "Thunar\nFirefox\nChromium\nThunderbird\nKeePassX\nLibreOffice\nGedit"
+	echo -e "Thunar\nFirefox\nChromium\nThunderbird\nKeePassXC\nLibreOffice\nGedit"
 }
 
-FAVORITE=`list_favorites | rofi -dmenu -p "Select favorite:"`
+FAVORITE=$(list_favorites | rofi -dmenu -p "Select favorite:")
 
 case ${FAVORITE} in
 Thunar)
@@ -19,8 +19,8 @@ Chromium)
 Thunderbird)
 	exec firefox
 	;;
-KeePassX)
-	exec keepassx
+KeePassXC)
+	exec keepassxc
 	;;
 LibreOffice)
 	exec libreoffice
