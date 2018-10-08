@@ -1,14 +1,15 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-status=$(amixer -c 0 -D pulse get Master | grep "Front Left:" | awk '{print $6}')
-vol=$(amixer -c 0 -D pulse get Master -M | grep -oE -m1 "[[:digit:]]*%")
+volCmd="pactl list sinks"
+muted=$(${volCmd} | awk '/^\s*Mute:/ { print $2 }')
+volume=$(${volCmd} | awk '/^\s*Volume:/ { print $5 }')
 
-if [ $status == "[on]" ]; then
-        if [ $vol == "0%" ]; then
-                echo "Muted [$vol]"
+if [ "$muted" == "no" ]; then
+        if [ "$volume" == "0%" ]; then
+                echo "Muted"
         else
-                echo "Vol: $vol"
+                echo "Vol: ${volume}"
         fi
 else
-        echo "Muted [$vol]"
+        echo "Muted [${volume}]"
 fi
