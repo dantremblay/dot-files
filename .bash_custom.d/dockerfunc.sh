@@ -65,6 +65,24 @@ nmap(){
 		--net host \
 		jess/nmap "$@"
 }
+puppet() {
+	docker container run -t --rm \
+		--mount type=bind,src=${PWD},dst=/mnt,ro \
+		puppet/puppet-agent puppet "$@"
+}
+# puppet manifest syntax checking
+alias pc="puppet parser validate $@"
+# puppet template syntax checking
+pt() {
+	if [ -z "$1" ]; then
+		echo "usage: pt <puppet_template_file.erb>"
+		return;
+	fi
+
+	docker container run -t --rm \
+		--mount type=bind,src=${PWD},dst=/mnt,ro \
+		puppet/puppet-agent erb -P -x -T '-' $1 | /usr/bin/ruby -c
+}
 shellcheck() {
 	docker container run -t --rm \
 		--mount type=bind,src=${PWD},dst=/mnt,ro \
