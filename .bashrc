@@ -31,7 +31,7 @@ export EDITOR='vim'
 export VISUAL='vim'
 
 # Use less as our pager
-export PAGER=/usr/bin/less
+export PAGER=less
 export LESS=-R
 
 # don't put duplicate lines or lines starting with space in the history.
