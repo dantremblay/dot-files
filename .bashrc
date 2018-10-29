@@ -27,16 +27,16 @@ esac
 #-----------------------------------------------------------------------------
 
 # User specific aliases and functions
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR="vim"
+export VISUAL="vim"
 
 # Use less as our pager
-export PAGER=less
-export LESS=-R
+export PAGER="less"
+export LESS="-R"
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+HISTCONTROL="ignoreboth"
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000
@@ -45,7 +45,7 @@ HISTFILESIZE=2000
 HISTIGNORE="history*:ls:pwd:date:* --help"
 
 # Needed for our custom version of 'less'
-export MYVIMDIR="$HOME/.vim/"
+export MYVIMDIR="${HOME}/.vim/"
 
 #-----------------------------------------------------------------------------
 # Aliases
@@ -111,7 +111,7 @@ shopt -s checkwinsize
 # Git Prompt
 #-----------------------------------------------------------------------------
 
-bold='';
+bold="";
 reset="\e[0m";
 
 black="\e[1;30m";
@@ -187,10 +187,10 @@ git_dirty() {
 # If there are changes that have been committed but not yet pushed, display a ⇡
 git_arrows() {
     # do nothing if there is no upstream configured
-    command git rev-parse --abbrev-ref @'{u}' &>/dev/null || return
+    command git rev-parse --abbrev-ref @"{u}" &>/dev/null || return
 
     local arrows=""
-    local arrow_status="$(command git rev-list --left-right --count HEAD...@'{u}' 2>/dev/null)"
+    local arrow_status=$(command git rev-list --left-right --count HEAD...@"{u}" 2>/dev/null)
 
     # do nothing if the command failed
     (( !$? )) || return
@@ -270,9 +270,9 @@ csrinfo() {
 # Custom less function, uses vim so we get syntax highlighting
 cless() {
 	if [ $# -eq 0 ]; then
-		vim -c 'so $MYVIMDIR/tools/less.vim' -
+		vim -c "so $MYVIMDIR/tools/less.vim" -
 	else
-		vim -c 'so $MYVIMDIR/tools/less.vim' "$@"
+		vim -c "so $MYVIMDIR/tools/less.vim" "$@"
 	fi
 }
 
