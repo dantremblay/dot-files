@@ -77,7 +77,7 @@ alias pubkey="cat ~/.ssh/id_rsa.pub | xclip -selection clipboard && echo '=> Pub
 # Pipe my private key to my clipboard.
 alias prikey="more ~/.ssh/id_rsa | xclip -selection clipboard && echo '=> Private key copied to clipboard.'"
 
-alias mount='mount | column -t'
+alias showmount='mount | column -t'
 
 alias wget='wget -c'
 
