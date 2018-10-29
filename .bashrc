@@ -226,7 +226,7 @@ else
 fi
 
 # Highlight the hostname when connected via SSH.
-if [[ "${SSH_TTY}" ]]; then
+if [ -n "${SSH_TTY}" ]; then
 	hostStyle="${bold}${red}"
 else
 	hostStyle="${yellow}"
@@ -234,7 +234,7 @@ fi
 
 # Set the terminal title to the current working directory.
 PS1="\[\033]0;\u@\h\007\]"
-if [[ ! -z "$SSH_TTY" && -z "$TMUX" ]]; then
+if [[ -n "$SSH_TTY" && -z "$TMUX" ]]; then
 	PS1+="\[${bold}\]\n" # newline
 	PS1+="\[${userStyle}\]\u" # username
 	PS1+="\[${white}\] at "
@@ -245,7 +245,7 @@ PS1+="\[${green}\]\w\[${reset}\]"; # working directory
 if [ -f /.dockerenv ]; then
         PS1+="\[${white}\] [c]"
 fi
-PS1+=" \$(git_dirty) \[\e[\$(git_is_uptodate)m\]\$(parse_git_branch) \$(git_arrows) \$(suspended_jobs)\[\e[m\]"
+PS1+=" \$(git_dirty) \[\$(parse_git_branch) \$(git_arrows) \[\e[m\]"
 PS1+="\n"
 PS1+="\[${white}\]> \[${reset}\]" # `$` (and reset color)
 export PS1
