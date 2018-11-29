@@ -1,0 +1,27 @@
+---
+common:
+  dirs:
+    - name: '.config'
+    - name: '.shell_custom.d'
+  ignore:
+    - '.git'
+    - '.gitignore'
+    - 'README.md'
+    - '.shell_custom.d'
+
+templates:
+  template1:
+    ignore:
+      - '.dunst'
+      - '.i3'
+      - '.Xresources'
+
+profiles:
+  me:
+    links:
+      - '.dunst:.config/dunst'
+      - '.shell_custom.d/dockerfunc.sh'
+      - '.shell_custom.d/sshagent.sh'
+  nox:
+    include:
+      - 'template1'

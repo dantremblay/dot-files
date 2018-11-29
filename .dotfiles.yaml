@@ -1,6 +1,0 @@
----
-ignore:
-  - '.git'
-  - '.gitignore'
-  - 'README.md'
-  - '.bash_custom.d'
