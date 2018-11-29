@@ -1,7 +1,7 @@
 SSH_ENV="${HOME}/.ssh/environment"
 SSH_AGENT_ENABLED="${HOME}/.ssh/agent_enabled"
 
-function start_agent() {
+start_agent() {
 	echo "Initialising SSH agent ..."
 	ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
 	echo "succeeded"
