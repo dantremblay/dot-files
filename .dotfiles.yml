@@ -7,19 +7,19 @@ common:
     - '.git'
     - '.gitignore'
     - 'README.md'
+    - '.config'
     - '.shell_custom.d'
 
 templates:
   template1:
     ignore:
-      - '.dunst'
       - '.i3'
       - '.Xresources'
 
 profiles:
   me:
     links:
-      - '.dunst:.config/dunst'
+      - '.config/dunst'
       - '.shell_custom.d/dockerfunc.sh'
       - '.shell_custom.d/sshagent.sh'
   nox:
