@@ -22,6 +22,7 @@ profiles:
       - '.config/dunst'
       - '.config/redshift'
       - '.config/redshift.conf'
+      - '.config/terminator'
       - '.shell_custom.d/dockerfunc.sh'
       - '.shell_custom.d/sshagent.sh'
   nox:
