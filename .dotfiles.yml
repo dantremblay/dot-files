@@ -20,6 +20,8 @@ profiles:
   me:
     links:
       - '.config/dunst'
+      - '.config/redshift'
+      - '.config/redshift.conf'
       - '.shell_custom.d/dockerfunc.sh'
       - '.shell_custom.d/sshagent.sh'
   nox:
