@@ -9,6 +9,7 @@ common:
     - 'README.md'
     - '.config'
     - '.shell_custom.d'
+    - '.vim-plugged'
 
 templates:
   template1:
@@ -28,3 +29,8 @@ profiles:
   nox:
     include:
       - 'template1'
+  container:
+    include:
+      - 'template1'
+    links:
+      - '.vim-plugged:.vim/plugged'

@@ -1,14 +1,11 @@
-" Useful links for vim configuration
-" http://learnvimscriptthehardway.stevelosh.com/
-" http://vimdoc.sourceforge.net/htmldoc/change.html#fo-table
-" http://vim.wikia.com/wiki/Copy,_cut_and_paste
+set laststatus=2
+set noshowmode
 
 set nocompatible
 
 set encoding=utf-8
 set binary
 
-set ruler		" line and column number of the cursor position
 "set nowrap		" don't wrap lines
 set shiftround		" use multiple of shiftwidth when indenting with '<' and '>'
 set showmatch		" show matching parenthesis
@@ -32,22 +29,6 @@ set pastetoggle=<F2>
 filetype plugin indent on
 syntax on
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-highlight Search ctermbg=LightBlue guibg=LightBlue
-
-match ExtraWhitespace /\s\+$/
-
-" Press F3 to toggle number on/off, and show current value.
-noremap <F3> :set number! number?<CR>
-
-" Press F4 to toggle relativenumber on/off, and show current value.
-noremap <F4> :set relativenumber! relativenumber?<CR>
-
-" Press F5 to toggle highlighting on/off, and show current value.
-noremap <F5> :set hlsearch! hlsearch?<CR>
-
-nnoremap ; :
-
 " Remember last position in file
 autocmd BufReadPost *
   \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -57,3 +38,29 @@ autocmd BufReadPost *
 " Turn off auto adding comments on next line
 "set fo=tcq
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'itchyny/lightline.vim'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'myusuf3/numbers.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'mbbill/undotree'
+
+Plug 'sheerun/vim-polyglot'
+
+Plug 'mattn/emmet-vim'
+Plug 'vim-scripts/HTML-AutoCloseTag'
+Plug 'hail2u/vim-css3-syntax'
+
+" Initialize plugin system
+call plug#end()
+
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :NumbersOnOff<CR>
+
+nnoremap <F5> :UndotreeToggle<CR>
+
+map <C-o> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
