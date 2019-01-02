@@ -33,4 +33,4 @@ profiles:
     include:
       - 'template1'
     links:
-      - '.vim-plugged:.vim/plugged'
+      - '.vim-plugged:Dotfiles/.vim/plugged'
