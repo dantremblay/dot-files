@@ -94,9 +94,9 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 set $workspace1 "1 "
-set $workspace2 "2 ""
-set $workspace3 "3 ""
-set $workspace4 "4 ""
+set $workspace2 "2 "
+set $workspace3 "3 "
+set $workspace4 "4 "
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -152,7 +152,7 @@ bindsym XF86MonBrightnessDown exec sudo light -U 5 # decrease screen brightness
 
 bindsym $mod+l exec i3lock -c 000000 -n
 
-bindsym $mod+Shift+f exec ~/.i3/i3_rofi_favorites.sh
+bindsym $mod+Shift+f exec $HOME/.config/i3/i3_rofi_favorites.sh
 
 
 # reload the configuration file
@@ -193,7 +193,7 @@ mode "$mode_system" {
     bindsym l exec --no-startup-id i3-msg exit, mode "default"
     bindsym p exec --no-startup-id systemctl poweroff, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym s exec --no-startup-id $HOME/.i3/suspend_lock.sh, mode "default"
+    bindsym s exec --no-startup-id $HOME/.config/i3/suspend_lock.sh, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -220,7 +220,7 @@ client.background       #ffffff
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-	status_command conky -c $HOME/.i3/panel/conkyrc
+	status_command $HOME/bin/mybar
 	mode dock
 	position top
 #	strip_workspace_numbers yes
