@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 list_favorites() {
-	echo -e "Thunar\nFirefox\nChromium\nThunderbird\nKeePassXC\nLibreOffice\nGedit\nTranslate\nDicoFR\nConjugaisonFR"
+	echo -e "Thunar\nFirefox\nChromium\nThunderbird\nGmail\nKeePassXC\nLibreOffice\nGedit\nTranslate\nDicoFR\nConjugaisonFR"
 }
 
 FAVORITE=$(list_favorites | rofi -dmenu -p "Select favorite:")
@@ -18,6 +18,9 @@ Chromium)
 	;;
 Thunderbird)
 	exec firefox
+	;;
+Gmail)
+	exec firefox --new-tab https://gmail.com
 	;;
 KeePassXC)
 	exec keepassxc
