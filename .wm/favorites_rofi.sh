@@ -4,7 +4,7 @@ list_favorites() {
 	echo -e "Thunar\nFirefox\nChromium\nThunderbird\nGmail\nKeePassXC\nLibreOffice\nGedit\nTranslate\nDicoFR\nConjugaisonFR"
 }
 
-FAVORITE=$(list_favorites | rofi -dmenu -p "Select favorite:")
+FAVORITE=$(list_favorites | rofi -dmenu -p "Select favorite")
 
 case ${FAVORITE} in
 Thunar)

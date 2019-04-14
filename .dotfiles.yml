@@ -15,6 +15,7 @@ templates:
   template1:
     ignore:
       - '.i3'
+      - '.wm'
       - '.Xresources'
 
 profiles:
