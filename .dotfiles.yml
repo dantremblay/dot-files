@@ -20,12 +20,12 @@ templates:
 profiles:
   me:
     links:
-      - '.config/dunst'
       - '.config/redshift'
       - '.config/redshift.conf'
-      - '.config/terminator'
+      - '.config/sway'
       - '.shell_custom.d/dockerfunc.sh'
       - '.shell_custom.d/sshagent.sh'
+      - '.Xdefaults:.Xresources'
   nox:
     include:
       - 'template1'
